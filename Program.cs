@@ -16,9 +16,44 @@ foreach (var contact in sortedPgoneBookList)
     Console.WriteLine($"{contact.Name} {contact.LastName}: '{contact.PhoneNumber}'");
 }
 
-public class Contact // модель класса
+
+
+//15.6.6
+
+var classes = new[]
 {
-    public Contact(string name, string lastName, long phoneNumber, String email) // метод-конструктор
+    new Classroom { Students = {"Evgeniy", "Sergey", "Andrew"}, },
+    new Classroom { Students = {"Anna", "Viktor", "Vladimir"}, },
+    new Classroom { Students = {"Bulat", "Alex", "Galina"}, }
+};
+var allStudents = GetAllStudents(classes);
+
+Console.WriteLine(string.Join(" ", allStudents));
+
+ 
+string[] GetAllStudents(Classroom[] classes)
+{
+    List<string> namesList = new List<string>();
+    if (classes.Length > 0)
+    {
+        foreach (var student in classes[0].Students)
+            namesList.Add(student);
+        
+        foreach (var singleClass in classes.Skip(1))
+        {
+            namesList = namesList.Concat(singleClass.Students).ToList();
+        }
+    }
+    
+    return namesList.ToArray();
+}
+
+
+
+// 14.3.3
+public class Contact
+{
+    public Contact(string name, string lastName, long phoneNumber, String email)
     {
         Name = name;
         LastName = lastName;
@@ -30,4 +65,10 @@ public class Contact // модель класса
     public String LastName { get; }
     public long PhoneNumber { get; }
     public String Email { get; }
+}
+
+//15.6.6
+public class Classroom
+{
+    public List<string> Students = new List<string>();
 }
